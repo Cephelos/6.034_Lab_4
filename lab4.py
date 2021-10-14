@@ -27,7 +27,7 @@ ANSWER_7 = '0'
 #### Part 2: Transitive Rule #########################################
 
 # Fill this in with your rule 
-transitive_rule = IF( AND( ), THEN( ) )
+transitive_rule = IF( AND("(?x) beats (?y)", "(?y) beats (?z)" ), THEN("(?x) beats (?z)" ) )
 
 # You can test your rule by uncommenting these pretty print statements
 #  and observing the results printed to your screen after executing lab1.py
@@ -41,11 +41,20 @@ transitive_rule = IF( AND( ), THEN( ) )
 # Define your rules here. We've given you an example rule whose lead you can follow:
 friend_rule = IF( AND("person (?x)", "person (?y)"), THEN ("friend (?x) (?y)", "friend (?y) (?x)") )
 
+sibling_rule = IF( AND("parent (?x) (?y)","parent (?x) (?z)"), THEN("sibling (?y) (?z)"))
+
+child_rule = IF(("parent (?x) (?y)"), THEN("child (?y) (?x)"))
+
+cousin_rule = IF(AND("parent (?x) (?y)", "parent (?w) (?z)", "sibling (?x) (?w)", NOT("sibling (?y) (?z)")), THEN("cousin (?y) (?z)"))
+
+grandparent_rule = IF(AND("parent (?x) (?y)", "parent (?y) (?z)"), THEN("grandparent (?x) (?z)"))
+
+grandchild_rule = IF(AND("child (?x) (?y)", "child (?y) (?z)"), THEN("grandchild (?x) (?z)"))
 
 
 
 # Add your rules to this list:
-family_rules = [ friend_rule ]
+family_rules = [ friend_rule, sibling_rule, child_rule, cousin_rule, grandparent_rule, grandchild_rule]
 
 # Uncomment this to test your data on the Simpsons family:
 # pprint(forward_chain(family_rules, simpsons_data, verbose=False))
@@ -83,7 +92,7 @@ def backchain_to_goal_tree(rules, hypothesis):
     (possibly with unbound variables), *not* AND or OR objects.
     Make sure to use simplify(...) to flatten trees where appropriate.
     """
-    raise NotImplementedError
+
 
 
 # Uncomment this to test out your backward chainer:
@@ -92,12 +101,12 @@ def backchain_to_goal_tree(rules, hypothesis):
 
 #### Survey #########################################
 
-NAME = None
-COLLABORATORS = None
+NAME = "Theodore Calabrese"
+COLLABORATORS = ""
 HOW_MANY_HOURS_THIS_LAB_TOOK = None
-WHAT_I_FOUND_INTERESTING = None
-WHAT_I_FOUND_BORING = None
-SUGGESTIONS = None
+WHAT_I_FOUND_INTERESTING = "Logical thinking can be fun"
+WHAT_I_FOUND_BORING = "Not much"
+SUGGESTIONS = ""
 
 
 ###########################################################
